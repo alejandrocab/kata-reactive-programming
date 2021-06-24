@@ -22,10 +22,9 @@ public class EulerProblem20 {
 
     public Mono<Long> ReactorSolution(Long limit) {
         Mono<Long> response = Flux.range(1, limit.intValue())//create a range from 1 to limit
-                .sort(Comparator.reverseOrder()) //reverse order stream
                 .map(BigDecimal::new) //convert int to BigDecimal value
-                .reduce((x,y) -> x.multiply(y))//multiply reversed stream values
-                .map(result -> this.getSum(result)); //map value and apply getSum function
+                .reduce(BigDecimal::multiply)//multiply stream values
+                .map(this::getSum); //map value and apply getSum function
 
         return response;
     }
